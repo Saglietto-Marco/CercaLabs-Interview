@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import API from '../../src/utils/inputsAPI';
 
 class StringBox extends Component {
 
     state = {
-        string: ''
+        string: '',
+        reversedString: []
     };
 
     handleInputChange = event => {
@@ -16,40 +18,51 @@ class StringBox extends Component {
 
     handleSubmit = event => {
         event.preventDefault();
-        console.log(this.state.string)
+        let str = { postedStr: this.state.string }
+        API.stringInputReversal(str)
+            .catch(err => {
+                return err
+            })
+            .then(
+                res => {
+                    this.setState({
+                        reversedString: res.data.string
+                    })
+                }
+            )
     }
 
     render() {
         return (
-
-            <div className="row">
-                <form
-                    className="col s6"
-                    name='StringBox'
-                >
-                    <div className="row">
-                        <div className="input-field col s12">
-                            <textarea id="textarea1" className="materialize-textarea"name='string'
-                                value={this.state.value}
-                                onChange={this.handleInputChange}>
-                            </textarea>    
-                            <label for="textarea1">String Input</label>
+            <div>
+                <div className="row">
+                    <div className='offset-s2 col s8'>
+                        <div className="row">
+                            <form>
+                                <div className="input-field col s12">
+                                    <textarea id="textarea1" className="materialize-textarea" name='string'
+                                        value={this.state.value}
+                                        onChange={this.handleInputChange}>
+                                    </textarea>
+                                    <label for="textarea1">String Input</label>
+                                </div>
+                            </form>
+                            <button
+                                class="btn waves-effect waves-light"
+                                type="submit"
+                                name="action"
+                                onClick={this.handleSubmit}>Submit
+                                <i class="material-icons right">send</i>
+                            </button>
+                        </div>
+                        <div className='row'>
+                            <p>Reversed String: {this.state.reversedString}</p>
                         </div>
                     </div>
-                </form>
-                <button 
-                    class="btn waves-effect waves-light" 
-                    type="submit" 
-                    name="action" 
-                    onClick={this.handleSubmit}>Submit
-                    <i class="material-icons right">send</i>
-                </button>
+                </div>
             </div>
-
         )
-
     }
-
 };
 
 export default StringBox;

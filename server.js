@@ -6,8 +6,9 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 
 // MIDDLEWARE
-app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 
 // SERVE STATIC
 if (process.env.NODE_ENV === 'production') {

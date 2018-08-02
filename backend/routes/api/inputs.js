@@ -1,16 +1,11 @@
 const router = require('express').Router();
-const usersController = require('../../controllers/inputController');
+const inputController = require('../../controllers/inputController');
 
-// '/api/users'
+// '/api/inputs'
 router.route('/')
-  .get(usersController.findAll)
-  .post(usersController.create);
+  .post(inputController.reverseString);
 
-// '/api/users/:id'
-router
-  .route('/:id')
-  .get(usersController.findById)
-  .put(usersController.update)
-  .delete(usersController.remove);
+router.route('/URL')
+  .post(inputController.URLRequest);
 
 module.exports = router;
